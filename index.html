@@ -47,65 +47,83 @@
             <div class="row bg-dark border border-3">
               <div class="col border-end">
                 <h3 class="mt-3 text-center">Przychody</h3>
-                <div class="d-flex flex-column flex-md-row align-items-center">
-                  <div class="col">
+                <form
+                  id="incomes-form"
+                  class="
+                    d-flex
+                    flex-column flex-md-row
+                    align-items-center
+                    text-center
+                  "
+                >
+                  <div class="mb-3">
                     <input
                       type="text"
                       class="form-control"
-                      id="incomeName"
+                      id="income-name"
                       placeholder="Nazwa przychodu"
                     />
                   </div>
-                  <div class="col">
+                  <div class="mb-3">
                     <input
                       type="number"
                       class="form-control"
-                      id="incomeAmount"
+                      id="income-amount"
                       placeholder="Kwota"
+                      min="1"
                     />
                   </div>
-                  <div class="col">
+                  <div class="mb-3">
                     <button
                       type="button"
                       class="btn btn-secondary mb-3"
-                      value="submit"
                       id="in-btn"
+                      type="submit"
                     >
                       Dodaj
                     </button>
                   </div>
-                </div>
+                </form>
               </div>
               <div class="col border-start">
                 <h3 class="mt-3 text-center">Wydatki</h3>
-                <div class="d-flex flex-column flex-md-row align-items-center">
-                  <div class="col">
+                <form
+                  id="expense-form"
+                  class="
+                    d-flex
+                    flex-column flex-md-row
+                    align-items-center
+                    text-center
+                  "
+                >
+                  <div class="mb-3">
                     <input
                       type="text"
                       class="form-control"
-                      id="expenseName"
+                      id="expense-name"
                       placeholder="Nazwa wydatku"
                     />
                   </div>
-                  <div class="col">
+                  <div class="mb-3">
                     <input
                       type="number"
                       class="form-control"
-                      id="expenseAmount"
+                      id="expense-amount"
                       placeholder="Kwota"
+                      min="1"
                     />
                   </div>
-                  <div class="col">
+                  <div class="mb-3">
                     <button
                       type="button"
                       class="btn btn-secondary mb-3"
-                      value="submit"
                       id="ex-btn"
+                      type="submit"
                     >
                       Dodaj
                     </button>
                   </div>
-                </div>
+                </form>
               </div>
             </div>
             <div
@@ -117,11 +135,21 @@
                 fs-6
               "
             >
-              <div class="col border-end">
-                <ol id="incomeList" class="mt-3">
-                  <li>1</li>
-                  <li>2</li>
-                </ol>
+              <div id="incomes-list" class="col border-end">
+                <div
+                  id="income-element"
+                  class="d-flex flex-row align-items-center text-black fs-6"
+                >
+                  <div class="row text-center element-text"></div>
+                  <button
+                    class="text-center edit-element"
+                    title="Edytuj"
+                  ></button>
+                  <button
+                    class="row text-center delete-element"
+                    title="Usuń"
+                  ></button>
+                </div>
               </div>
               <div class="col border-start">
                 <ol id="expenseList" class="mt-3">
