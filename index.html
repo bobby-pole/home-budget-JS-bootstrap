@@ -28,12 +28,17 @@
     <title>Home budget calculator</title>
   </head>
   <body>
+    <!--Nazwa i logo-->
     <div id="background" class="bg-image shadow-2-strong">
       <div class="overlay">
         <div class="row text-center text-white pt-5">
           <h1 class="fs-1">Kalkulator budżetu domowego</h1>
           <i id="icon" class="fas fa-balance-scale-left"></i>
         </div>
+        <h2 class="row text-center text-white" id="amountLeft"></h2>
+        <span id="balanceAmount"></span>
+
+        <!--Tabela-->
         <div
           class="
             container
@@ -43,6 +48,7 @@
             align-items-center
           "
         >
+          <!--Przychody-->
           <div class="container">
             <div class="row bg-dark border border-3">
               <div class="col border-end">
@@ -60,7 +66,7 @@
                     <input
                       type="text"
                       class="form-control"
-                      id="income-name"
+                      name="incomeName"
                       placeholder="Nazwa przychodu"
                     />
                   </div>
@@ -68,27 +74,28 @@
                     <input
                       type="number"
                       class="form-control"
-                      id="income-amount"
+                      name="incomeAmount"
                       placeholder="Kwota"
                       min="1"
                     />
                   </div>
                   <div class="mb-3">
                     <button
-                      type="button"
-                      class="btn btn-secondary mb-3"
-                      id="in-btn"
                       type="submit"
+                      class="btn btn-secondary mb-3 border"
+                      id="in-btn"
                     >
                       Dodaj
                     </button>
                   </div>
                 </form>
               </div>
+
+              <!--Wydatki-->
               <div class="col border-start">
                 <h3 class="mt-3 text-center">Wydatki</h3>
                 <form
-                  id="expense-form"
+                  id="expenses-form"
                   class="
                     d-flex
                     flex-column flex-md-row
@@ -100,7 +107,7 @@
                     <input
                       type="text"
                       class="form-control"
-                      id="expense-name"
+                      name="expenseName"
                       placeholder="Nazwa wydatku"
                     />
                   </div>
@@ -108,17 +115,16 @@
                     <input
                       type="number"
                       class="form-control"
-                      id="expense-amount"
+                      name="expenseAmount"
                       placeholder="Kwota"
                       min="1"
                     />
                   </div>
                   <div class="mb-3">
                     <button
-                      type="button"
-                      class="btn btn-secondary mb-3"
-                      id="ex-btn"
                       type="submit"
+                      class="btn btn-secondary mb-3 border"
+                      id="ex-btn"
                     >
                       Dodaj
                     </button>
@@ -135,37 +141,27 @@
                 fs-6
               "
             >
-              <div id="incomes-list" class="col border-end">
-                <div
-                  id="income-element"
-                  class="d-flex flex-row align-items-center text-black fs-6"
-                >
-                  <div class="row text-center element-text"></div>
-                  <button
-                    class="text-center edit-element"
-                    title="Edytuj"
-                  ></button>
-                  <button
-                    class="row text-center delete-element"
-                    title="Usuń"
-                  ></button>
-                </div>
+              <!--Lista przychodów-->
+              <div class="col border-end" id="income">
+                <ol
+                  id="incomesList"
+                  class="list-group list-group-numbered mt-3"
+                ></ol>
               </div>
-              <div class="col border-start">
-                <ol id="expenseList" class="mt-3">
-                  <li>1</li>
-                  <li>2</li>
-                  <li>3</li>
-                  <li>4</li>
-                </ol>
+
+              <!--Lista wydatków-->
+              <div class="col border-start" id="expense">
+                <ol id="expensesList" class="mt-3"></ol>
               </div>
             </div>
             <div class="row bg-dark border border-3">
-              <div class="col border-end">
+              <div class="col border-start d-flex flex-columen flex-md-row">
                 <h4 class="mt-3 mb-3">Suma przychodów:</h4>
+                <h4 class="mt-3 mb-3 income-total"></h4>
               </div>
-              <div class="col border-start">
+              <div class="col border-start d-flex flex-columen flex-md-row">
                 <h4 class="mt-3 mb-3">Suma wydatków:</h4>
+                <h4 class="mt-3 mb-3 expense-total"></h4>
               </div>
             </div>
           </div>
