@@ -36,7 +36,10 @@
           <i id="icon" class="fas fa-balance-scale-left"></i>
         </div>
         <h2 class="row text-center text-white" id="amountLeft"></h2>
-        <span id="balanceAmount"></span>
+        <span
+          id="balanceAmount"
+          class="text-white d-flex justify-content-center align-items-center"
+        ></span>
 
         <!--Tabela-->
         <div
@@ -156,18 +159,26 @@
             </div>
             <div class="row bg-dark border border-3">
               <div class="col border-start d-flex flex-columen flex-md-row">
-                <h4 class="mt-3 mb-3">Suma przychodów:</h4>
-                <h4 class="mt-3 mb-3 income-total"></h4>
+                <h4 class="mt-3 mb-3">
+                  Suma przychodów:<span class="income-total">0</span>
+                </h4>
               </div>
               <div class="col border-start d-flex flex-columen flex-md-row">
-                <h4 class="mt-3 mb-3">Suma wydatków:</h4>
-                <h4 class="mt-3 mb-3 expense-total"></h4>
+                <h4 class="mt-3 mb-3">
+                  Suma wydatków:<span class="expense-total">0</span>
+                </h4>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/uuid/8.3.2/uuid.min.js"
+      integrity="sha512-UNM1njAgOFUa74Z0bADwAq8gbTcqZC8Ej4xPSzpnh0l6KMevwvkBvbldF9uR++qKeJ+MOZHRjV1HZjoRvjDfNQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
     <script
       src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/js/bootstrap.min.js"
       integrity="sha512-OvBgP9A2JBgiRad/mM36mkzXSXaJE9BEIENnVEmeZdITvwT09xnxLtT4twkCa8m/loMbPHsvPl0T8lRGVBwjlQ=="

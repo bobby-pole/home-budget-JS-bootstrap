@@ -1,121 +1,151 @@
-let balance = 0;
-let incomes = 0;
-let expenses = 0;
+const incomesForm = document.querySelector("#incomes-form");
+const buttonGetIncome = document.querySelector("#in-btn");
+const incomesList = document.querySelector("#incomesList");
+
+const expensesForm = document.querySelector("#expenses-form");
+const buttonGetExpense = document.querySelector("#ex-btn");
+const expensesList = document.querySelector("#expensesList");
+
+const incomeTotal = document.querySelector(".income-total");
+const expenseTotal = document.querySelector(".expense-total");
+const balance = document.querySelector("#balanceAmount");
+
 let ENTRY_LIST = [];
 
-let balanceElement = document.querySelector("#balanceAmount");
-let incomesTotalElement = document.querySelector(".income-total");
-let expensesTotalElement = document.querySelector(".expense-total");
-// document.addEventListener("DOMContentLoaded", () => {
-//   const balanceEl = document.querySelector("#amountLeft");
-//   const incomeEl = document.querySelector("#income");
-//   const expenseEl = document.querySelector("#expense");
+incomesForm.addEventListener("submit", (e) => {
+  e.preventDefault();
 
-//   const incomeList = document.querySelector("#incomes-list");
-//   const incomeForm = document.querySelector("#incomes-form");
-//   const expenseList = document.querySelector("#expensesList");
-//   const expenseForm = document.querySelector("#expenses-form");
+  const incomeNameValue = e.target.elements.incomeName.value;
+  const incomeAmountValue = e.target.elements.incomeAmount.value;
+  if (incomeAmountValue.trim() === "") return;
 
-//   const incomeTotalEl = document.querySelector(".income-total");
-//   const expenseTotalEl = document.querySelector(".expense-total");
+  const income = {
+    id: uuid.v4(),
+    type: "income",
+    title: incomeNameValue,
+    amount: parseFloat(incomeAmountValue),
+  };
 
-//   let ENTRY_LIST = [];
+  ENTRY_LIST.push(income);
 
-//   incomeForm.addEventListener("submit", function () {
-//     e.preventDefault();
+  recalculate("income");
 
-//     if (!incomeName.value || !incomeAmount.value) return;
-//     let income = {
-//       type: "income",
-//       title: incomeName.value,
-//       amount: parseFloat(incomeAmount.value),
-//     };
+  const li = `<li id="e_${income.id}" data-type="${income.type}">
+    <input class="hidden" type="text" value="${income.title}" />
+    <span class="static">${income.title}</span>
+    <input class="hidden" type="number" value="${income.amount}" />
+    <span class="static">${income.amount}</span>
+    <button class="edit-btn" onmousedown="editElement('${income.id}')">Edytuj</button>
+    <button class="hidden save-btn" onmousedown="saveElement('${income.id}', 'income')">Zapisz</button>
+    <button id="delete-btn-in" onmousedown="deleteElement('${income.id}', 'income')">Usuń</button>
+  </li>`;
 
-//     ENTRY_LIST.push(income);
-//     updateUI();
-//     clearInput([incomeName, incomeAmount]);
+  incomesList.innerHTML += li;
+});
 
-//     // console.log(e.target.elements.incomeName.value);
+expensesForm.addEventListener("submit", (e) => {
+  e.preventDefault();
 
-//     // const { incomeName, incomeAmount } = e.target.elements;
-//     // console.log(incomeAmount.value);
+  const expenseNameValue = e.target.elements.expenseName.value;
+  const expenseAmountValue = e.target.elements.expenseAmount.value;
+  if (expenseAmountValue.trim() === "") return;
 
-//     // if (incomeName.value !== "") {
-//     //   addIncome(incomeName.value);
-//     //   incomeName.value = "";
-//     // }
-//   });
+  const expense = {
+    id: uuid.v4(),
+    type: "expense",
+    title: expenseNameValue,
+    amount: parseFloat(expenseAmountValue),
+  };
 
-//   expenseForm.addEventListener("submit", function () {
-//     e.preventDefault();
+  ENTRY_LIST.push(expense);
 
-//     if (!expenseName.value || !expenseAmount.value) return;
-//     let expense = {
-//       type: "expense",
-//       title: expenseName.value,
-//       amount: parseFloat(expenseAmount.value),
-//     };
+  recalculate("expense");
 
-//     ENTRY_LIST.push(expense);
-//     updateUI();
-//     clearInput([expenseName, expenseAmount]);
-//   });
+  const li = `<li id="e_${expense.id}" data-type="${expense.type}">
+    <input class="hidden" type="text" value="${expense.title}" />
+    <span class="static">${expense.title}</span>
+    <input class="hidden" type="number" value="${expense.amount}" />
+    <span class="static">${expense.amount}</span>
+    <button class="edit-btn" onmousedown="editElement('${expense.id}')">Edytuj</button>
+    <button class="hidden save-btn" onmousedown="saveElement('${expense.id}', 'expense')">Zapisz</button>
+    <button id="delete-btn-ex" onmousedown="deleteElement('${expense.id}', 'expense')">Usuń</button>
+  </li>`;
 
-//   function calculateTotal(type, ENTRY_LIST) {
-//     ENTRY_LIST.forEach((entry) => {
-//       if (entry.type == type) {
-//         sum += entry.amount;
-//       }
-//     });
-//     return sum;
-//   }
+  expensesList.innerHTML += li;
+});
 
-//   income = calculateTotal("income", ENTRY_LIST);
+const recalculate = (type) => {
+  const valueArray = ENTRY_LIST.filter((el) => el.type === type);
+  const newValue =
+    valueArray.length === 0
+      ? { amount: 0 }
+      : valueArray.reduce((a, b) => {
+          return {
+            amount: a.amount + b.amount,
+          };
+        });
+  if (type === "income") {
+    incomeTotal.textContent = newValue.amount;
+  } else {
+    expenseTotal.textContent = newValue.amount;
+  }
 
-//   outcome = calculateTotal("expense", ENTRY_LIST);
+  const totalBalance =
+    parseFloat(incomeTotal.textContent) - parseFloat(expenseTotal.textContent);
 
-//   balance = calculateBalance(income, outcome);
+  if (totalBalance < 0) {
+    balance.textContent = `Jesteś na minusie: ${totalBalance}`;
+  } else if (totalBalance === 0) {
+    balance.textContent = `Bilans wynosi zero`;
+  } else {
+    balance.textContent = `Możesz jeszcze wydać ${totalBalance} złotych`;
+  }
+};
 
-//   function calculateBalance(income, outcome) {
-//     return income - outcome;
-//   }
+const editElement = (id) => {
+  document
+    .querySelectorAll(`#e_${id} .hidden, #e_${id} .save-btn`)
+    .forEach((el) => el.classList.remove("hidden"));
+  document
+    .querySelectorAll(`#e_${id} .static, #e_${id} .edit-btn`)
+    .forEach((el) => el.classList.add("hidden"));
+};
 
-//   function addEntry(list, type, title, amount, id) {
-//     const entry = ` <li id="${id}" class="${type} d-flex flex-row list-group-item list-group-item-dark"
-//                       <div class="entry">${title}: ${amount}zł</div>
-//                       <button class="btn btn-success mb-3 border text-center" name="edit">Edytuj</button>
-//                       <button class="btn btn-success mb-3 border text-center" name="delete">Usuń</button>
-//                     </li>`;
+const saveElement = (id, type) => {
+  const titleElement = document.querySelector(
+    `#e_${id} input[type="text"]+span.static`
+  );
+  const titleValue = document.querySelector(
+    `#e_${id} input[type="text"]`
+  ).value;
 
-//     list.innerHTML(entry);
-//   }
+  titleElement.textContent = titleValue;
 
-//   function updateUI() {
-//     income = calculateTotal("income", ENTRY_LIST);
-//     outcome = calculateTotal("expense", ENTRY_LIST);
-//     balance = calculateBalance(income, outcome);
+  const amountElement = document.querySelector(
+    `#e_${id} input[type="number"]+span.static`
+  );
+  const amountValue = document.querySelector(
+    `#e_${id} input[type="number"]`
+  ).value;
 
-//     incomeTotalEl.innerHTML = `${income}zł`;
-//     expenseTotalEl.innerHTML = `${outcome}zł`;
-//     balanceEl.innerHTML = `${balance}zł`;
+  amountElement.textContent = amountValue;
 
-//     clearElement([incomeList, expenseList]);
+  document
+    .querySelectorAll(`#e_${id} .hidden, #e_${id} .edit-btn`)
+    .forEach((el) => el.classList.remove("hidden"));
+  document
+    .querySelectorAll(`#e_${id} input, #e_${id} .save-btn`)
+    .forEach((el) => el.classList.add("hidden"));
 
-//     ENTRY_LIST.forEach((entry, index) => {
-//       if (entry.type == "income") {
-//         showEntry(incomeList, entry.type, entry.title, entry.amount, index);
-//       } else if (entry.type == "expense") {
-//         showEntry(expenseList, entry.type, entry.title, entry.amount, index);
-//       }
-//     });
-//   }
+  const target = ENTRY_LIST.find((el) => el.id === id);
+  target.amount = parseFloat(amountValue);
+  target.title = titleValue;
 
-//   function deleteEntry(ENTRY) {
-//     ENTRY_LIST.splice(ENTRY.id, 1);
-//     updateUI();
-//   }
+  recalculate(type);
+};
 
-//   function editEntry(ENTRY) {
-//     deleteEntry(ENTRY);
-//   }
-// });
+const deleteElement = (id, type) => {
+  ENTRY_LIST = ENTRY_LIST.filter((e) => e.id !== id);
+  document.querySelector(`#e_${id}`).remove();
+  recalculate(type);
+};
