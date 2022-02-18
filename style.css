@@ -23,7 +23,7 @@ body {
 .overlay {
   background-color: rgba(0, 0, 0, 0.75);
   position: absolute;
-  height: 200%;
+  height: 130%;
   width: 100%;
   top: 0;
   left: 0;
